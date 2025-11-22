@@ -6,7 +6,8 @@
       "Bash(./gradlew clean:*)",
       "Bash(git init:*)",
       "Bash(git add:*)",
-      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Physics Simulator Android app\n\n- Firebase Authentication (email/password)\n- Firebase Firestore for user data\n- User roles (student/teacher)\n- Physics simulations\n- Quiz system\n- Grades tracking\n- Password visibility toggle\n- Custom Application class for Firebase initialization\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Physics Simulator Android app\n\n- Firebase Authentication (email/password)\n- Firebase Firestore for user data\n- User roles (student/teacher)\n- Physics simulations\n- Quiz system\n- Grades tracking\n- Password visibility toggle\n- Custom Application class for Firebase initialization\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
