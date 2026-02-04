@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Phiz">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,25 +25,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".StudentHomeActivity"
+            android:name=".activities.StudentHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".TeacherHomeActivity"
+            android:name=".activities.TeacherHomeActivity"
             android:exported="false" />
         <activity
-            android:name=".PhysicsSimulationActivity"
+            android:name=".activities.PhysicsSimulationActivity"
             android:exported="false" />
         <activity
-            android:name=".QuizActivity"
+            android:name=".activities.QuizActivity"
             android:exported="false" />
         <activity
-            android:name=".GradesActivity"
+            android:name=".activities.GradesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CreateQuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ViewQuestionsActivity"
             android:exported="false" />
     </application>
 

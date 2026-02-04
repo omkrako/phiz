@@ -1,50 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F5F5F5">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <!-- Header with gradient -->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#FF9800"
-        android:elevation="4dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:background="@drawable/gradient_orange"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Grades"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-    </com.google.android.material.appbar.MaterialToolbar>
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:gravity="center_vertical">
 
+            <!-- Back Button -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/backButton"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                app:cardCornerRadius="22dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_arrow_back"
+                    app:tint="#FF9800"
+                    android:contentDescription="Back"/>
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Grades"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View your quiz results"
+                    android:textSize="14sp"
+                    android:textColor="#FFE0B2"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+            <!-- Grades Icon -->
+            <FrameLayout
+                android:layout_width="56dp"
+                android:layout_height="56dp">
+
+                <View
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/circle_green"/>
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_grades"
+                    android:contentDescription="Grades"/>
+            </FrameLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Grades List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gradesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="16dp"/>
+        android:padding="16dp"
+        android:clipToPadding="false"/>
 
-    <TextView
-        android:id="@+id/emptyTextView"
-        android:layout_width="wrap_content"
+    <!-- Empty State -->
+    <LinearLayout
+        android:id="@+id/emptyStateLayout"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_gravity="center"
-        android:text="No quiz results yet.\nTake a quiz to see your grades!"
-        android:textSize="18sp"
-        android:textColor="#999999"
+        android:orientation="vertical"
         android:gravity="center"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:padding="32dp">
 
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Back to Home"
-        android:backgroundTint="#666666"/>
+        <FrameLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp">
+
+            <View
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/circle_orange"
+                android:alpha="0.2"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_grades"
+                app:tint="#BDBDBD"
+                android:contentDescription="No grades"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/emptyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No quiz results yet"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#666666"
+            android:layout_marginTop="24dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Take a quiz to see your grades here!"
+            android:textSize="14sp"
+            android:textColor="#AAAAAA"
+            android:layout_marginTop="8dp"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/takeQuizButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:paddingHorizontal="32dp"
+            android:text="Take a Quiz"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_button_green"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
 
 </LinearLayout>
