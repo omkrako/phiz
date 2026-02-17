@@ -212,51 +212,107 @@
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
-            <!-- All Grades Button -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/allGradesButton"
+            <!-- Action Buttons Row 2 -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="6dp"
-                android:clickable="true"
-                android:focusable="true">
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <!-- All Grades Button -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/allGradesButton"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:gravity="center_vertical">
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:clickable="true"
+                    android:focusable="true">
 
-                    <FrameLayout
-                        android:layout_width="48dp"
-                        android:layout_height="48dp">
-
-                        <View
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:background="@drawable/circle_blue"/>
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_grades"
-                            android:contentDescription="Grades"/>
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="View All Grades"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/blue_dark"
-                        android:layout_marginStart="12dp"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <FrameLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp">
+
+                            <View
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:background="@drawable/circle_blue"/>
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_grades"
+                                android:contentDescription="Grades"/>
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="View All Grades"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/blue_dark"
+                            android:layout_marginTop="8dp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Quiz Settings Button -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/quizSettingsButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center">
+
+                        <FrameLayout
+                            android:layout_width="48dp"
+                            android:layout_height="48dp">
+
+                            <View
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:background="@drawable/circle_purple"/>
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_edit"
+                                android:contentDescription="Quiz Settings"/>
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Quiz Settings"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/purple_primary"
+                            android:layout_marginTop="8dp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 

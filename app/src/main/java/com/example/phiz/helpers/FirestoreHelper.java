@@ -1060,6 +1060,55 @@ public class FirestoreHelper {
                 });
     }
 
+    // ==================== QUIZ SETTINGS OPERATIONS ====================
+
+    public static final String COLLECTION_SETTINGS = "settings";
+    public static final String DOC_QUIZ_SETTINGS = "quiz";
+    public static final int DEFAULT_QUESTION_COUNT = 5;
+
+    /**
+     * Save quiz question count setting
+     */
+    public void saveQuizQuestionCount(int count, OnCompleteListener listener) {
+        Map<String, Object> settings = new HashMap<>();
+        settings.put("numberOfQuestions", count);
+
+        db.collection(COLLECTION_SETTINGS)
+                .document(DOC_QUIZ_SETTINGS)
+                .set(settings)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "Quiz question count saved: " + count);
+                    if (listener != null) listener.onComplete(true, null);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error saving quiz question count", e);
+                    if (listener != null) listener.onComplete(false, e);
+                });
+    }
+
+    /**
+     * Get quiz question count setting
+     */
+    public void getQuizQuestionCount(OnSuccessListener<Integer> onSuccess, OnFailureListener onFailure) {
+        db.collection(COLLECTION_SETTINGS)
+                .document(DOC_QUIZ_SETTINGS)
+                .get()
+                .addOnSuccessListener(document -> {
+                    int count = DEFAULT_QUESTION_COUNT;
+                    if (document.exists()) {
+                        Long value = document.getLong("numberOfQuestions");
+                        if (value != null) {
+                            count = value.intValue();
+                        }
+                    }
+                    if (onSuccess != null) onSuccess.onSuccess(count);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error getting quiz question count", e);
+                    if (onFailure != null) onFailure.onFailure(e);
+                });
+    }
+
     // ==================== ACTIVITY TRACKING OPERATIONS ====================
 
     /**

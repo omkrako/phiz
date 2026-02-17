@@ -65,6 +65,8 @@ public class QuizActivity extends AppCompatActivity {
     private static final int COMPLETION_BONUS = 10;
     private static final int PERFECT_SCORE_BONUS = 50;
 
+    private int maxQuestions = 5; // default, overridden by Firestore setting
+
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -110,15 +112,28 @@ public class QuizActivity extends AppCompatActivity {
             });
         }
 
-        // Load questions from Firebase
-        loadQuestionsFromFirebase();
+        // Load quiz settings first, then load questions
+        loadQuizSettings();
     }
 
-    private void loadQuestionsFromFirebase() {
-        // Show loading state
+    private void loadQuizSettings() {
         submitButton.setEnabled(false);
         questionTextView.setText("Loading questions...");
 
+        FirestoreHelper.getInstance().getQuizQuestionCount(
+                count -> {
+                    maxQuestions = count;
+                    loadQuestionsFromFirebase();
+                },
+                e -> {
+                    // Use default if settings can't be loaded
+                    maxQuestions = 5;
+                    loadQuestionsFromFirebase();
+                }
+        );
+    }
+
+    private void loadQuestionsFromFirebase() {
         db.collection("questions")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -154,9 +169,9 @@ public class QuizActivity extends AppCompatActivity {
                                 // Randomize question order
                                 Collections.shuffle(questions);
 
-                                // Limit to 5 questions max
-                                if (questions.size() > 5) {
-                                    questions = new ArrayList<>(questions.subList(0, 5));
+                                // Limit to configured number of questions
+                                if (questions.size() > maxQuestions) {
+                                    questions = new ArrayList<>(questions.subList(0, maxQuestions));
                                 }
 
                                 // Start the quiz

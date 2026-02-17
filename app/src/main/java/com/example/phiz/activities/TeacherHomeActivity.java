@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -43,6 +46,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
     private MaterialCardView createQuestionButton;
     private MaterialCardView viewQuestionsButton;
     private MaterialCardView allGradesButton;
+    private MaterialCardView quizSettingsButton;
     private StudentAdapter adapter;
 
     private FirebaseAuth mAuth;
@@ -79,6 +83,7 @@ public class TeacherHomeActivity extends AppCompatActivity {
         createQuestionButton = findViewById(R.id.createQuestionButton);
         viewQuestionsButton = findViewById(R.id.viewQuestionsButton);
         allGradesButton = findViewById(R.id.allGradesButton);
+        quizSettingsButton = findViewById(R.id.quizSettingsButton);
 
         // Request notification permission for Android 13+
         requestNotificationPermission();
@@ -105,6 +110,10 @@ public class TeacherHomeActivity extends AppCompatActivity {
         allGradesButton.setOnClickListener(v -> {
             startActivity(new Intent(TeacherHomeActivity.this, AllGradesActivity.class));
         });
+
+        if (quizSettingsButton != null) {
+            quizSettingsButton.setOnClickListener(v -> showQuizSettingsDialog());
+        }
 
         if (settingsButton != null) {
             settingsButton.setOnClickListener(v -> {
@@ -142,6 +151,38 @@ public class TeacherHomeActivity extends AppCompatActivity {
     private void initializeNotifications() {
         // Teachers don't need study reminders, inactivity checks, or weekly progress workers.
         // Those are student-only features. No workers to schedule for teachers.
+    }
+
+    private void showQuizSettingsDialog() {
+        FirestoreHelper.getInstance().getQuizQuestionCount(
+                currentCount -> {
+                    NumberPicker numberPicker = new NumberPicker(this);
+                    numberPicker.setMinValue(1);
+                    numberPicker.setMaxValue(50);
+                    numberPicker.setValue(currentCount);
+                    numberPicker.setWrapSelectorWheel(false);
+
+                    new AlertDialog.Builder(this)
+                            .setTitle("Quiz Settings")
+                            .setMessage("Select the number of questions per quiz:")
+                            .setView(numberPicker)
+                            .setPositiveButton("Save", (dialog, which) -> {
+                                int selectedCount = numberPicker.getValue();
+                                FirestoreHelper.getInstance().saveQuizQuestionCount(selectedCount, (success, e) -> {
+                                    if (success) {
+                                        Toast.makeText(this, "Quiz will have " + selectedCount + " questions", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(this, "Error saving setting", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            })
+                            .setNegativeButton("Cancel", null)
+                            .show();
+                },
+                e -> {
+                    Toast.makeText(this, "Error loading settings", Toast.LENGTH_SHORT).show();
+                }
+        );
     }
 
     private void loadStudents() {
