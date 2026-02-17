@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.phiz.R;
 import com.example.phiz.models.User;
@@ -62,17 +63,17 @@ public class RegisterActivity extends AppCompatActivity {
     private void selectRole(String role) {
         selectedRole = role;
         if ("student".equals(role)) {
-            studentCard.setStrokeColor(getResources().getColor(android.R.color.holo_green_dark));
+            studentCard.setStrokeColor(ContextCompat.getColor(this, R.color.green_dark));
             studentCard.setStrokeWidth(6);
             studentCard.setCardElevation(8);
-            teacherCard.setStrokeColor(getResources().getColor(android.R.color.darker_gray));
+            teacherCard.setStrokeColor(ContextCompat.getColor(this, R.color.divider));
             teacherCard.setStrokeWidth(2);
             teacherCard.setCardElevation(2);
         } else {
-            teacherCard.setStrokeColor(getResources().getColor(android.R.color.holo_blue_dark));
+            teacherCard.setStrokeColor(ContextCompat.getColor(this, R.color.blue_dark));
             teacherCard.setStrokeWidth(6);
             teacherCard.setCardElevation(8);
-            studentCard.setStrokeColor(getResources().getColor(android.R.color.darker_gray));
+            studentCard.setStrokeColor(ContextCompat.getColor(this, R.color.divider));
             studentCard.setStrokeWidth(2);
             studentCard.setCardElevation(2);
         }

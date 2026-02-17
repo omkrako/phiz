@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F5F5F5">
+    android:background="@color/background_primary">
 
     <!-- Header with gradient -->
     <FrameLayout
@@ -30,7 +30,7 @@
                 android:layout_height="44dp"
                 app:cardCornerRadius="22dp"
                 app:cardElevation="4dp"
-                app:cardBackgroundColor="#FFFFFF"
+                app:cardBackgroundColor="@color/background_surface"
                 android:clickable="true"
                 android:focusable="true">
 
@@ -39,7 +39,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_arrow_back"
-                    app:tint="#FF9800"
+                    app:tint="@color/orange_primary"
                     android:contentDescription="Back"/>
             </com.google.android.material.card.MaterialCardView>
 
@@ -51,6 +51,7 @@
                 android:layout_marginStart="16dp">
 
                 <TextView
+                    android:id="@+id/titleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="My Grades"
@@ -59,11 +60,12 @@
                     android:textStyle="bold"/>
 
                 <TextView
+                    android:id="@+id/subtitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="View your quiz results"
                     android:textSize="14sp"
-                    android:textColor="#FFE0B2"
+                    android:textColor="@color/orange_light"
                     android:layout_marginTop="4dp"/>
             </LinearLayout>
 
@@ -122,7 +124,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_grades"
-                app:tint="#BDBDBD"
+                app:tint="@color/gray_icon"
                 android:contentDescription="No grades"/>
         </FrameLayout>
 
@@ -133,7 +135,7 @@
             android:text="No quiz results yet"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#666666"
+            android:textColor="@color/text_tertiary"
             android:layout_marginTop="24dp"/>
 
         <TextView
@@ -141,7 +143,7 @@
             android:layout_height="wrap_content"
             android:text="Take a quiz to see your grades here!"
             android:textSize="14sp"
-            android:textColor="#AAAAAA"
+            android:textColor="@color/text_placeholder"
             android:layout_marginTop="8dp"
             android:gravity="center"/>
 

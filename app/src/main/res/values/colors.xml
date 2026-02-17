@@ -2,4 +2,66 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Backgrounds -->
+    <color name="background_primary">#F5F5F5</color>
+    <color name="background_surface">#FFFFFF</color>
+
+    <!-- Text -->
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary_dark">#444444</color>
+    <color name="text_secondary">#555555</color>
+    <color name="text_tertiary">#666666</color>
+    <color name="text_hint">#888888</color>
+    <color name="text_disabled">#999999</color>
+    <color name="text_placeholder">#AAAAAA</color>
+    <color name="text_on_gradient">#B3FFFFFF</color>
+    <color name="text_on_dark">#FFFFFF</color>
+
+    <!-- Divider -->
+    <color name="divider">#E0E0E0</color>
+
+    <!-- Blue -->
+    <color name="blue_primary">#2196F3</color>
+    <color name="blue_medium">#1976D2</color>
+    <color name="blue_dark">#1565C0</color>
+    <color name="blue_tint_bg">#E3F2FD</color>
+    <color name="blue_light">#BBDEFB</color>
+    <color name="blue_ripple">#1A2196F3</color>
+
+    <!-- Green -->
+    <color name="green_primary">#4CAF50</color>
+    <color name="green_medium">#388E3C</color>
+    <color name="green_dark">#2E7D32</color>
+    <color name="green_tint_bg">#E8F5E9</color>
+    <color name="green_light">#C8E6C9</color>
+    <color name="green_ripple">#1A4CAF50</color>
+
+    <!-- Orange -->
+    <color name="orange_primary">#FF9800</color>
+    <color name="orange_medium">#F57C00</color>
+    <color name="orange_dark">#E65100</color>
+    <color name="orange_tint_bg">#FFF3E0</color>
+    <color name="orange_light">#FFE0B2</color>
+    <color name="deep_orange">#FF5722</color>
+    <color name="orange_ripple">#1AFF9800</color>
+
+    <!-- Purple -->
+    <color name="purple_primary">#9C27B0</color>
+    <color name="purple_dark">#6A1B9A</color>
+    <color name="purple_light">#D1C4E9</color>
+
+    <!-- Red -->
+    <color name="red_primary">#F44336</color>
+    <color name="red_medium">#D32F2F</color>
+    <color name="red_dark">#C62828</color>
+
+    <!-- Gray -->
+    <color name="gray_icon">#BDBDBD</color>
+    <color name="gray_medium">#757575</color>
+    <color name="gray_dark">#616161</color>
+    <color name="gray_darker">#424242</color>
+
+    <!-- Special -->
+    <color name="brown_surface">#795548</color>
 </resources>

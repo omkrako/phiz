@@ -39,7 +39,19 @@
       "Bash(\"C:\\\\Program Files\\\\Pandoc\\\\pandoc.exe\" --version)",
       "Bash(\"C:\\\\Program Files\\\\Pandoc\\\\pandoc.exe\" \"c:\\\\Users\\\\omer\\\\AndroidStudioProjects\\\\phiz\\\\docs\\\\user-manual-he.md\" -o \"c:\\\\Users\\\\omer\\\\AndroidStudioProjects\\\\phiz\\\\docs\\\\user-manual-he.docx\" --resource-path=\"c:\\\\Users\\\\omer\\\\AndroidStudioProjects\\\\phiz\\\\docs\")",
       "Bash(\"C:\\\\Program Files\\\\Pandoc\\\\pandoc.exe\":*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(npm install:*)",
+      "Bash(firebase:*)",
+      "Bash(npm run lint:*)",
+      "Bash(./gradlew.bat:*)",
+      "Bash(export JAVA_HOME=\"/c/Program Files/Android/Android Studio/jbr\")",
+      "Bash(JAVA_HOME=\"C:/Program Files/Android/Android Studio/jbr\" \"C:/Users/omer/AndroidStudioProjects/phiz/gradlew.bat\":*)",
+      "Bash(gradlew.bat assembleDebug:*)",
+      "Bash(cmd.exe //c \"gradlew.bat assembleDebug\")",
+      "Bash(JAVA_HOME=\"/c/Program Files/Android/Android Studio/jbr\" ./gradlew:*)",
+      "Bash(npx firebase deploy:*)",
+      "Bash(npx firebase apps:list)",
+      "Bash(npx firebase appdistribution:distribute:*)"
     ],
     "deny": [],
     "ask": []

@@ -5,6 +5,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- Notification permissions -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <application
         android:name=".PhizApplication"
         android:allowBackup="true"
@@ -41,16 +47,65 @@
             android:exported="false" />
         <activity
             android:name=".activities.QuizActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="quiz"
+                    android:scheme="phiz" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.GradesActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="grades"
+                    android:scheme="phiz" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.CreateQuestionActivity"
             android:exported="false" />
         <activity
             android:name=".activities.ViewQuestionsActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.AllGradesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.NotificationSettingsActivity"
+            android:exported="false" />
+
+        <!-- Firebase Cloud Messaging Service -->
+        <service
+            android:name=".services.PhizFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Boot Receiver for rescheduling notifications -->
+        <receiver
+            android:name=".receivers.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Notification Action Receiver -->
+        <receiver
+            android:name=".receivers.NotificationActionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.phiz.NOTIFICATION_ACTION" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

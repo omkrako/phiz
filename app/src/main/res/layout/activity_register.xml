@@ -39,14 +39,14 @@
             android:text="Create Account"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="#2E7D32"/>
+            android:textColor="@color/green_dark"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Join us to start learning physics"
             android:textSize="14sp"
-            android:textColor="#666666"
+            android:textColor="@color/text_tertiary"
             android:layout_marginBottom="24dp"/>
 
         <!-- Registration Card -->
@@ -128,7 +128,7 @@
                     android:text="I am a..."
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#333333"
+                    android:textColor="@color/text_primary"
                     android:layout_marginBottom="12dp"/>
 
                 <LinearLayout
@@ -148,7 +148,7 @@
                         android:focusable="true"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="4dp"
-                        app:strokeColor="#4CAF50"
+                        app:strokeColor="@color/green_primary"
                         app:strokeWidth="2dp">
 
                         <LinearLayout
@@ -162,7 +162,7 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:src="@drawable/ic_person"
-                                app:tint="#4CAF50"
+                                app:tint="@color/green_primary"
                                 android:contentDescription="Student icon"/>
 
                             <TextView
@@ -170,7 +170,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Student"
                                 android:textSize="15sp"
-                                android:textColor="#333333"
+                                android:textColor="@color/text_primary"
                                 android:layout_marginTop="8dp"/>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -185,7 +185,7 @@
                         android:focusable="true"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="2dp"
-                        app:strokeColor="#E0E0E0"
+                        app:strokeColor="@color/divider"
                         app:strokeWidth="1dp">
 
                         <LinearLayout
@@ -199,7 +199,7 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:src="@drawable/ic_students"
-                                app:tint="#2196F3"
+                                app:tint="@color/blue_primary"
                                 android:contentDescription="Teacher icon"/>
 
                             <TextView
@@ -207,7 +207,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Teacher"
                                 android:textSize="15sp"
-                                android:textColor="#333333"
+                                android:textColor="@color/text_primary"
                                 android:layout_marginTop="8dp"/>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
@@ -238,7 +238,7 @@
                 android:layout_height="wrap_content"
                 android:text="Already have an account? "
                 android:textSize="15sp"
-                android:textColor="#666666"/>
+                android:textColor="@color/text_tertiary"/>
 
             <TextView
                 android:id="@+id/loginTextView"
@@ -246,7 +246,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sign In"
                 android:textSize="15sp"
-                android:textColor="#388E3C"
+                android:textColor="@color/green_medium"
                 android:textStyle="bold"
                 android:clickable="true"
                 android:focusable="true"
@@ -259,7 +259,7 @@
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
             android:visibility="gone"
-            android:indeterminateTint="#4CAF50"/>
+            android:indeterminateTint="@color/green_primary"/>
 
     </LinearLayout>
 </ScrollView>

@@ -11,8 +11,8 @@ android {
         applicationId = "com.example.phiz"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -46,4 +46,10 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(platform("com.google.firebase:firebase-bom:34.6.0"))
     implementation("com.google.firebase:firebase-analytics")
+
+    // Firebase Cloud Messaging for push notifications
+    implementation("com.google.firebase:firebase-messaging")
+
+    // WorkManager for scheduled local notifications
+    implementation("androidx.work:work-runtime:2.9.0")
 }
