@@ -1,0 +1,60 @@
+flowchart TD
+    App[PhizApplication]:::app
+
+    Main[MainActivity] --> Login[LoginActivity]
+    Login <--> Reg[RegisterActivity]
+    Login --> SHome[StudentHomeActivity]
+    Login --> THome[TeacherHomeActivity]
+
+    SHome --> Phys[PhysicsSimulationActivity]
+    SHome --> Quiz[QuizActivity]
+    SHome --> Grades[GradesActivity]
+    SHome --> NSet[NotificationSettingsActivity]
+
+    THome --> CQ[CreateQuestionActivity]
+    THome --> VQ[ViewQuestionsActivity]
+    THome --> AG[AllGradesActivity]
+
+    Phys --> PSV[PhysicsSimulationView]
+    Quiz --> DV[DoodleView]
+    Grades --> GAdapter[GradeAdapter]
+    THome --> SAdapter[StudentAdapter]
+    VQ --> QAdapter[QuestionAdapter]
+    AG --> AGAdapter[AllGradesAdapter]
+
+    SHome --> FH[FirestoreHelper]:::helper
+    THome --> FH
+    Quiz --> FH
+    Grades --> FH
+    CQ --> FH
+    VQ --> FH
+    AG --> FH
+    NSet --> FH
+
+    NSet --> WS[WorkerScheduler]:::helper
+    WS --> SRW[StudyReminderWorker]:::worker
+    WS --> ICW[InactivityCheckWorker]:::worker
+    WS --> WPW[WeeklyProgressWorker]:::worker
+
+    SRW --> NH[NotificationHelper]:::helper
+    ICW --> NH
+    WPW --> NH
+
+    Login --> FCM[FCMTokenManager]:::helper
+    Reg --> FCM
+    FCM --> FMS[PhizFirebaseMessagingService]:::service
+    FMS --> NH
+
+    BR[BootReceiver]:::receiver --> WS
+    NAR[NotificationActionReceiver]:::receiver --> NH
+
+    FH --> FAuth[(Firebase Auth)]:::cloud
+    FH --> FStore[(Cloud Firestore)]:::cloud
+    FCM --> FCloud[(Firebase FCM)]:::cloud
+
+    classDef app fill:#fff3b0,stroke:#333
+    classDef helper fill:#cde7ff,stroke:#333
+    classDef worker fill:#d4f7d4,stroke:#333
+    classDef service fill:#f7d4f0,stroke:#333
+    classDef receiver fill:#ffd4cc,stroke:#333
+    classDef cloud fill:#e6e6e6,stroke:#333,stroke-dasharray: 5 5

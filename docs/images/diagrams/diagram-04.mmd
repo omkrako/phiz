@@ -1,0 +1,13 @@
+flowchart LR
+    Root[(Firestore)]
+    Root --> UsersC[users/]
+    Root --> QC[questions/]
+    Root --> TC[tests/]
+
+    UsersC --> UDoc["{userId}<br/>uid, email, name<br/>role, totalScore<br/>lastActivity, fcmToken<br/>notificationPreferences"]
+    UDoc --> GradesSC[grades/ subcollection]
+    GradesSC --> GDoc["{gradeId}<br/>quizId, userId<br/>quizName, score<br/>totalQuestions<br/>timestamp"]
+
+    QC --> QDoc["{questionId}<br/>questionText<br/>options[4]<br/>correctAnswerIndex<br/>explanation<br/>pointValue, difficulty"]
+
+    TC --> TDoc["{testId}<br/>testName, subject<br/>questions[], totalPoints<br/>passingScore, timeLimit<br/>difficulty, isActive<br/>createdBy, createdAt"]

@@ -1,0 +1,29 @@
+flowchart TD
+    Main([MainActivity / Splash]) --> CheckAuth{משתמש מחובר?}
+    CheckAuth -- לא --> Login[LoginActivity]
+    CheckAuth -- כן --> CheckRole{role?}
+
+    Login <--> Register[RegisterActivity]
+    Login --> CheckRole
+    Register --> CheckRole
+
+    CheckRole -- student --> StudentHome[StudentHomeActivity]
+    CheckRole -- teacher --> TeacherHome[TeacherHomeActivity]
+
+    StudentHome --> Physics[PhysicsSimulationActivity]
+    StudentHome --> Quiz[QuizActivity]
+    StudentHome --> Grades[GradesActivity]
+    StudentHome --> NotifS[NotificationSettingsActivity]
+
+    TeacherHome --> CreateQ[CreateQuestionActivity]
+    TeacherHome --> ViewQ[ViewQuestionsActivity]
+    TeacherHome --> AllG[AllGradesActivity]
+    TeacherHome --> NotifT[NotificationSettingsActivity]
+
+    Physics --> PSV[PhysicsSimulationView]
+    Quiz --> QuizSummary[/Dialog סיכום/]
+    QuizSummary --> SaveResult[(שמירת QuizResult ב-Firestore)]
+    QuizSummary --> StudentHome
+
+    StudentHome -. logout .-> Login
+    TeacherHome -. logout .-> Login

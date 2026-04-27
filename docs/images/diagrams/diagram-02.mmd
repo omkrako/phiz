@@ -1,0 +1,73 @@
+classDiagram
+    class User {
+        +String uid
+        +String email
+        +String name
+        +String role
+        +int totalScore
+    }
+
+    class Question {
+        +String questionId
+        +String questionText
+        +List~String~ options
+        +int correctAnswerIndex
+        +String explanation
+        +int pointValue
+        +String difficulty
+        +isCorrect(int) bool
+    }
+
+    class Test {
+        +String testId
+        +String testName
+        +String subject
+        +List~Question~ questions
+        +int totalPoints
+        +int passingScore
+        +int timeLimit
+        +String createdBy
+        +Timestamp createdAt
+    }
+
+    class QuizResult {
+        +String quizId
+        +String userId
+        +String quizName
+        +int score
+        +int totalQuestions
+        +Timestamp timestamp
+    }
+
+    class NotificationPreferences {
+        +bool quizNotifications
+        +bool gradeNotifications
+        +bool achievementNotifications
+        +bool studyReminders
+        +bool weeklyProgress
+        +String reminderTime
+        +List~String~ reminderDays
+    }
+
+    class FirestoreHelper {
+        <<Singleton>>
+        -FirebaseFirestore db
+        -FirebaseAuth auth
+        +getInstance() FirestoreHelper
+        +saveUser(User)
+        +saveQuizResult(QuizResult)
+        +loadGrades(userId)
+        +saveQuestion(Question)
+        +loadQuestions()
+        +updateLastActivity(userId)
+    }
+
+    User "1" --> "*" QuizResult : completes
+    User "1" --> "1" NotificationPreferences : has
+    Test "1" o-- "*" Question : contains
+    Test "*" --> "1" User : createdBy
+    QuizResult "*" --> "1" User : belongs to
+    FirestoreHelper ..> User : reads/writes
+    FirestoreHelper ..> Question : reads/writes
+    FirestoreHelper ..> Test : reads/writes
+    FirestoreHelper ..> QuizResult : reads/writes
