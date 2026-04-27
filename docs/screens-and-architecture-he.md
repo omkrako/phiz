@@ -815,80 +815,154 @@ classDiagram
 ### תרשים קשרי רכיבים (Component Diagram)
 
 ```mermaid
-flowchart TD
-    App[PhizApplication]:::app
+flowchart LR
+    subgraph INIT["🚀 Application Init"]
+        direction TB
+        App[PhizApplication]
+        Main[MainActivity]
+        App ~~~ Main
+    end
 
-    Main[MainActivity] --> Login[LoginActivity]
-    Login <--> Reg[RegisterActivity]
-    Login --> SHome[StudentHomeActivity]
-    Login --> THome[TeacherHomeActivity]
+    subgraph AUTH["🔐 Authentication"]
+        direction TB
+        Login[LoginActivity]
+        Reg[RegisterActivity]
+        Login <--> Reg
+    end
 
-    SHome --> Phys[PhysicsSimulationActivity]
-    SHome --> Quiz[QuizActivity]
-    SHome --> Grades[GradesActivity]
-    SHome --> NSet[NotificationSettingsActivity]
+    subgraph STUDENT["🎓 Student Screens"]
+        direction TB
+        SHome[StudentHomeActivity]
+        Phys[PhysicsSimulationActivity]
+        Quiz[QuizActivity]
+        Grades[GradesActivity]
+        NSetS[NotificationSettingsActivity]
+        SHome --> Phys & Quiz & Grades & NSetS
+    end
 
-    THome --> CQ[CreateQuestionActivity]
-    THome --> VQ[ViewQuestionsActivity]
-    THome --> AG[AllGradesActivity]
+    subgraph TEACHER["👨‍🏫 Teacher Screens"]
+        direction TB
+        THome[TeacherHomeActivity]
+        CQ[CreateQuestionActivity]
+        VQ[ViewQuestionsActivity]
+        AG[AllGradesActivity]
+        NSetT[NotificationSettingsActivity]
+        THome --> CQ & VQ & AG & NSetT
+    end
 
-    Phys --> PSV[PhysicsSimulationView]
-    Quiz --> DV[DoodleView]
-    Grades --> GAdapter[GradeAdapter]
-    THome --> SAdapter[StudentAdapter]
-    VQ --> QAdapter[QuestionAdapter]
-    AG --> AGAdapter[AllGradesAdapter]
+    subgraph VIEWS["🎨 Custom Views"]
+        direction TB
+        PSV[PhysicsSimulationView]
+        DV[DoodleView]
+    end
 
-    SHome --> FH[FirestoreHelper]:::helper
-    THome --> FH
-    Quiz --> FH
-    Grades --> FH
-    CQ --> FH
-    VQ --> FH
-    AG --> FH
-    NSet --> FH
+    subgraph ADAPTERS["📋 Adapters"]
+        direction TB
+        SAdapter[StudentAdapter]
+        GAdapter[GradeAdapter]
+        QAdapter[QuestionAdapter]
+        AGAdapter[AllGradesAdapter]
+    end
 
-    NSet --> WS[WorkerScheduler]:::helper
-    WS --> SRW[StudyReminderWorker]:::worker
-    WS --> ICW[InactivityCheckWorker]:::worker
-    WS --> WPW[WeeklyProgressWorker]:::worker
+    subgraph HELPERS["🔧 Helpers"]
+        direction TB
+        FH[FirestoreHelper\nSingleton]
+        FCM[FCMTokenManager]
+        NH[NotificationHelper]
+        WS[WorkerScheduler]
+    end
 
-    SRW --> NH[NotificationHelper]:::helper
-    ICW --> NH
-    WPW --> NH
+    subgraph WORKERS["⚙️ Background Workers"]
+        direction TB
+        SRW[StudyReminderWorker]
+        ICW[InactivityCheckWorker]
+        WPW[WeeklyProgressWorker]
+    end
 
-    Login --> FCM[FCMTokenManager]:::helper
-    Reg --> FCM
-    FCM --> FMS[PhizFirebaseMessagingService]:::service
+    subgraph RECEIVERS["📡 Receivers & Services"]
+        direction TB
+        FMS[PhizFirebaseMessagingService]
+        BR[BootReceiver]
+        NAR[NotificationActionReceiver]
+    end
+
+    subgraph CLOUD["☁️ Firebase"]
+        direction TB
+        FAuth[(Firebase Auth)]
+        FStore[(Cloud Firestore)]
+        FCloud[(Firebase FCM)]
+    end
+
+    INIT --> AUTH
+    AUTH --> STUDENT & TEACHER
+
+    Phys --> PSV
+    Quiz --> DV
+
+    THome --> SAdapter
+    Grades --> GAdapter
+    VQ --> QAdapter
+    AG --> AGAdapter
+
+    SHome & THome & Quiz & Grades & CQ & VQ & AG --> FH
+    Login & Reg --> FCM
+    NSetS & NSetT --> WS
+    FCM --> FMS
     FMS --> NH
 
-    BR[BootReceiver]:::receiver --> WS
-    NAR[NotificationActionReceiver]:::receiver --> NH
+    WS --> SRW & ICW & WPW
+    SRW & ICW & WPW --> NH
 
-    FH --> FAuth[(Firebase Auth)]:::cloud
-    FH --> FStore[(Cloud Firestore)]:::cloud
-    FCM --> FCloud[(Firebase FCM)]:::cloud
+    BR --> WS
+    NAR --> NH
 
-    classDef app fill:#fff3b0,stroke:#333
-    classDef helper fill:#cde7ff,stroke:#333
-    classDef worker fill:#d4f7d4,stroke:#333
-    classDef service fill:#f7d4f0,stroke:#333
-    classDef receiver fill:#ffd4cc,stroke:#333
-    classDef cloud fill:#e6e6e6,stroke:#333,stroke-dasharray: 5 5
+    FH --> FAuth & FStore
+    FCM --> FCloud
+
+    classDef app      fill:#fff3b0,stroke:#b8860b,color:#333,font-weight:bold
+    classDef activity fill:#dce8ff,stroke:#4472c4,color:#333
+    classDef view     fill:#e8f5e9,stroke:#388e3c,color:#333
+    classDef adapter  fill:#f3e5f5,stroke:#7b1fa2,color:#333
+    classDef helper   fill:#cde7ff,stroke:#1565c0,color:#333,font-weight:bold
+    classDef worker   fill:#d4f7d4,stroke:#2e7d32,color:#333
+    classDef service  fill:#fce4ec,stroke:#c62828,color:#333
+    classDef receiver fill:#ffd4cc,stroke:#bf360c,color:#333
+    classDef cloud    fill:#e8eaf6,stroke:#3949ab,color:#333,stroke-dasharray:6 3
+
+    class App,Main app
+    class Login,Reg,SHome,THome,Phys,Quiz,Grades,CQ,VQ,AG,NSetS,NSetT activity
+    class PSV,DV view
+    class SAdapter,GAdapter,QAdapter,AGAdapter adapter
+    class FH,FCM,NH,WS helper
+    class SRW,ICW,WPW worker
+    class FMS service
+    class BR,NAR receiver
+    class FAuth,FStore,FCloud cloud
 ```
 
 ### עיקרי הקשרים
 
-- **כל `User`** מזוהה לפי `uid` ובעל `role` יחיד ("student" או "teacher").
-- **כל `User` (תלמיד)** יכול ליצור מספר רשומות `QuizResult`.
-- **כל `QuizResult`** קשור ל-`User` יחיד דרך `userId` ולמבחן שבוצע.
-- **כל `Test`** מכיל רשימה של `Question` ונוצר על ידי `User` מסוג מורה (`createdBy`).
-- **כל `Question`** עומדת בפני עצמה במאגר וניתן לשייכה למספר מבחנים.
-- **`NotificationPreferences`** משויך ל-`User` יחיד ומשפיע על ה-`Workers`.
-- **מחלקת `FirestoreHelper`** היא נקודת הגישה היחידה לכל פעולות מסד הנתונים – היא מטפלת בשמירה, שליפה ומחיקה של כל הישויות.
-- **מחלקות ה-`Adapter`** מחברות בין הנתונים (Models) לבין ממשק המשתמש (`RecyclerView`).
-- **מחלקות ה-`Workers`** פועלות ברקע ותלויות ב-`NotificationPreferences` ו-`NotificationHelper` להצגת התראות.
-- **`PhysicsSimulationView`** עצמאית ואינה קשורה ל-Firebase – כל החישובים מקומיים.
+**שכבת אתחול ואימות:**
+- **`PhizApplication`** מופעלת לפני כל רכיב אחר ומאתחלת את Firebase. `MainActivity` בודקת מצב התחברות ומנתבת לאחד משני מסלולי הבית.
+- **`LoginActivity` ו-`RegisterActivity`** מקושרות דו-כיוונית; שתיהן קוראות ל-`FCMTokenManager` לאחר הצלחה כדי לשמור את ה-Push token.
+
+**שכבת מסכים:**
+- **`StudentHomeActivity`** ו-**`TeacherHomeActivity`** הן עצמאיות לחלוטין – כל אחת מנותבת לפי שדה `role` ב-Firestore ואינה נגישה לתפקיד השני.
+- כל **Activities** (תלמיד ומורה כאחד) שולחות פעולות קריאה/כתיבה אך ורק דרך `FirestoreHelper` — אין גישה ישירה ל-Firestore מהמסכים.
+- **`NotificationSettingsActivity`** קיימת בשני המסלולים (תלמיד ומורה), אך למורה מוסתרות אפשרויות התזכורות האישיות.
+
+**שכבת Views ו-Adapters:**
+- **`PhysicsSimulationView`** ו-**`DoodleView`** הן `Custom Views` עצמאיות, ללא תלות ב-Firebase – כל לוגיקתן מקומית.
+- מחלקות ה-**`Adapter`** (`StudentAdapter`, `GradeAdapter`, `QuestionAdapter`, `AllGradesAdapter`) חיות בתוך ה-Activity שלהן ומחברות בין רשימת המודלים ל-`RecyclerView`.
+
+**שכבת Helpers:**
+- **`FirestoreHelper`** הוא Singleton — נקודת הגישה היחידה ל-Firestore בכל האפליקציה.
+- **`WorkerScheduler`** מנהל את מחזור החיים של שלושת ה-Workers; הוא מופעל מחדש גם על ידי `BootReceiver` בעת הפעלת המכשיר.
+- **`NotificationHelper`** מקבל קריאות משלושת ה-Workers, מ-`PhizFirebaseMessagingService` ומ-`NotificationActionReceiver` — הוא נקודת הריכוז היחידה להצגת התראות.
+
+**שכבת Firebase:**
+- **`FirestoreHelper`** → `Firebase Auth` + `Cloud Firestore`
+- **`FCMTokenManager`** → `Firebase FCM` (שמירת token + קבלת הודעות Push דרך `PhizFirebaseMessagingService`)
 
 ---
 
