@@ -1,0 +1,130 @@
+flowchart LR
+    subgraph INIT["🚀 Application Init"]
+        direction TB
+        App[PhizApplication]
+        Main[MainActivity]
+        App ~~~ Main
+    end
+
+    subgraph AUTH["🔐 Authentication"]
+        direction TB
+        Login[LoginActivity]
+        Reg[RegisterActivity]
+        Login <--> Reg
+    end
+
+    subgraph STUDENT["🎓 Student Screens"]
+        direction TB
+        SHome[StudentHomeActivity]
+        Phys[PhysicsSimulationActivity]
+        Quiz[QuizActivity]
+        Grades[GradesActivity]
+        NSetS[NotificationSettingsActivity]
+        SHome --> Phys & Quiz & Grades & NSetS
+    end
+
+    subgraph TEACHER["👨‍🏫 Teacher Screens"]
+        direction TB
+        THome[TeacherHomeActivity]
+        CQ[CreateQuestionActivity]
+        VQ[ViewQuestionsActivity]
+        AG[AllGradesActivity]
+        NSetT[NotificationSettingsActivity]
+        THome --> CQ & VQ & AG & NSetT
+    end
+
+    subgraph VIEWS["🎨 Custom Views"]
+        direction TB
+        PSV[PhysicsSimulationView]
+        DV[DoodleView]
+    end
+
+    subgraph ADAPTERS["📋 Adapters"]
+        direction TB
+        SAdapter[StudentAdapter]
+        GAdapter[GradeAdapter]
+        QAdapter[QuestionAdapter]
+        AGAdapter[AllGradesAdapter]
+    end
+
+    subgraph HELPERS["🔧 Helpers"]
+        direction TB
+        FH[FirestoreHelper\nSingleton]
+        FCM[FCMTokenManager]
+        NH[NotificationHelper]
+        WS[WorkerScheduler]
+    end
+
+    subgraph WORKERS["⚙️ Background Workers"]
+        direction TB
+        SRW[StudyReminderWorker]
+        ICW[InactivityCheckWorker]
+        WPW[WeeklyProgressWorker]
+    end
+
+    subgraph RECEIVERS["📡 Receivers & Services"]
+        direction TB
+        FMS[PhizFirebaseMessagingService]
+        BR[BootReceiver]
+        NAR[NotificationActionReceiver]
+    end
+
+    subgraph CLOUD["☁️ Firebase"]
+        direction TB
+        FAuth[(Firebase Auth)]
+        FStore[(Cloud Firestore)]
+        FCloud[(Firebase FCM)]
+    end
+
+    %% Main navigation flow
+    INIT --> AUTH
+    AUTH --> STUDENT & TEACHER
+
+    %% Custom Views
+    Phys --> PSV
+    Quiz --> DV
+
+    %% Adapters
+    THome --> SAdapter
+    Grades --> GAdapter
+    VQ --> QAdapter
+    AG --> AGAdapter
+
+    %% Helpers connections
+    SHome & THome & Quiz & Grades & CQ & VQ & AG --> FH
+    Login & Reg --> FCM
+    NSetS & NSetT --> WS
+    FCM --> FMS
+    FMS --> NH
+
+    %% Workers
+    WS --> SRW & ICW & WPW
+    SRW & ICW & WPW --> NH
+
+    %% Receivers
+    BR --> WS
+    NAR --> NH
+
+    %% Cloud backend
+    FH --> FAuth & FStore
+    FCM --> FCloud
+
+    classDef app      fill:#fff3b0,stroke:#b8860b,color:#333,font-weight:bold
+    classDef activity fill:#dce8ff,stroke:#4472c4,color:#333
+    classDef view     fill:#e8f5e9,stroke:#388e3c,color:#333
+    classDef adapter  fill:#f3e5f5,stroke:#7b1fa2,color:#333
+    classDef helper   fill:#cde7ff,stroke:#1565c0,color:#333,font-weight:bold
+    classDef worker   fill:#d4f7d4,stroke:#2e7d32,color:#333
+    classDef service  fill:#fce4ec,stroke:#c62828,color:#333
+    classDef receiver fill:#ffd4cc,stroke:#bf360c,color:#333
+    classDef cloud    fill:#e8eaf6,stroke:#3949ab,color:#333,stroke-dasharray:6 3
+
+    class App,Main app
+    class Login,Reg,SHome,THome,Phys,Quiz,Grades,CQ,VQ,AG,NSetS,NSetT activity
+    class PSV,DV view
+    class SAdapter,GAdapter,QAdapter,AGAdapter adapter
+    class FH,FCM,NH,WS helper
+    class SRW,ICW,WPW worker
+    class FMS service
+    class BR,NAR receiver
+    class FAuth,FStore,FCloud cloud
