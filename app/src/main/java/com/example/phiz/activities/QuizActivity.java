@@ -65,7 +65,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final int COMPLETION_BONUS = 10;
     private static final int PERFECT_SCORE_BONUS = 50;
 
-    private int maxQuestions = 5; // default, overridden by Firestore setting
+    private static final int MAX_QUESTIONS = 5;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -112,25 +112,9 @@ public class QuizActivity extends AppCompatActivity {
             });
         }
 
-        // Load quiz settings first, then load questions
-        loadQuizSettings();
-    }
-
-    private void loadQuizSettings() {
         submitButton.setEnabled(false);
         questionTextView.setText("Loading questions...");
-
-        FirestoreHelper.getInstance().getQuizQuestionCount(
-                count -> {
-                    maxQuestions = count;
-                    loadQuestionsFromFirebase();
-                },
-                e -> {
-                    // Use default if settings can't be loaded
-                    maxQuestions = 5;
-                    loadQuestionsFromFirebase();
-                }
-        );
+        loadQuestionsFromFirebase();
     }
 
     private void loadQuestionsFromFirebase() {
@@ -170,8 +154,8 @@ public class QuizActivity extends AppCompatActivity {
                                 Collections.shuffle(questions);
 
                                 // Limit to configured number of questions
-                                if (questions.size() > maxQuestions) {
-                                    questions = new ArrayList<>(questions.subList(0, maxQuestions));
+                                if (questions.size() > MAX_QUESTIONS) {
+                                    questions = new ArrayList<>(questions.subList(0, MAX_QUESTIONS));
                                 }
 
                                 // Start the quiz
